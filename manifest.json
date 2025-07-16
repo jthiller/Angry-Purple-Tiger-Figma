@@ -1,0 +1,20 @@
+{
+  "name": "Angry Purple Tiger",
+  "id": "1527421586873494078",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma",
+    "figjam",
+    "slides"
+  ],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://raw.githubusercontent.com"
+    ]
+  }
+}
