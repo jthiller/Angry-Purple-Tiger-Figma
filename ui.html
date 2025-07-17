@@ -1,436 +1,545 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8" />
-  <title>Animal Name Generator</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      margin: 0;
-      padding: 16px;
-      background-color: #f8f9fa;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-    
-    .section {
-      background: white;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      padding: 4px;
-      border-radius: 4px;
-    }
-    
-    .section-header:hover {
-      background-color: #f8f9fa;
-    }
-    
-    .section-title {
-      font-weight: 600;
-      color: #333;
-      font-size: 13px;
-      margin: 0;
-    }
-    
-    .section-current {
-      color: #666;
-      font-size: 11px;
-      font-style: italic;
-    }
-    
-    .section-toggle {
-      color: #666;
-      font-size: 16px;
-      transition: transform 0.2s;
-    }
-    
-    .section-toggle.collapsed {
-      transform: rotate(-90deg);
-    }
-    
-    .section-content {
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-    }
-    
-    .section-content.collapsed {
-      max-height: 0;
-      margin-bottom: 0;
-    }
-    
-    .radio-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .radio-option {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      padding: 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .radio-option:hover {
-      background-color: #f5f5f5;
-    }
-    
-    .radio-option input[type="radio"] {
-      margin-top: 2px;
-    }
-    
-    .radio-label {
-      flex: 1;
-    }
-    
-    .radio-title {
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 2px;
-    }
-    
-    .radio-example {
-      color: #666;
-      font-size: 11px;
-      font-style: italic;
-    }
-    
-    .checkbox-section {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    
-    .checkbox-section input[type="checkbox"] {
-      margin: 0;
-    }
-    
-    .checkbox-section label {
-      font-size: 12px;
-      color: #555;
-      cursor: pointer;
-    }
-    
-    .advanced-settings {
-      background: #f8f9fa;
-      border: 1px solid #e9ecef;
-      border-radius: 6px;
-      padding: 12px;
-      margin-top: 8px;
-    }
-    
-    .url-input-group {
-      margin-bottom: 12px;
-    }
-    
-    .url-input-group:last-of-type {
-      margin-bottom: 8px;
-    }
-    
-    .url-input-group label {
-      display: block;
-      font-weight: 500;
-      margin-bottom: 4px;
-      color: #333;
-      font-size: 11px;
-    }
-    
-    .url-input {
-      width: 100%;
-      padding: 6px 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 11px;
-      box-sizing: border-box;
-    }
-    
-    .url-input:focus {
-      outline: none;
-      border-color: #007acc;
-      box-shadow: 0 0 0 2px rgba(0,122,204,0.2);
-    }
-    
-    .reset-btn {
-      background: #f0f0f0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 6px 12px;
-      font-size: 11px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .reset-btn:hover {
-      background: #e0e0e0;
-    }
-    
-    .generate-btn {
-      width: 100%;
-      background: #007acc;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 12px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    
-    .generate-btn:hover {
-      background: #005a9e;
-    }
-    
-    .generate-btn:active {
-      background: #004578;
-    }
-  </style>
-</head>
-<body>
-  <div class="section">
-    <div class="section-header" onclick="toggleSection('mode-section')">
-      <div>
-        <div class="section-title">Name Length</div>
-        <div class="section-current" id="mode-current">Mixed</div>
-      </div>
-      <div class="section-toggle" id="mode-toggle">▼</div>
-    </div>
-    <div class="section-content" id="mode-section">
-      <div class="radio-group">
-        <div class="radio-option">
-          <input type="radio" id="mode-mixed" name="mode" value="mixed" checked onchange="updateModeDisplay()">
-          <label for="mode-mixed" class="radio-label">
-            <div class="radio-title">Mixed</div>
-            <div class="radio-example">"swift amber tiger" or "magnificent crimson elephant"</div>
-          </label>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Animal Name Generator</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        margin: 0;
+        padding: 16px;
+        background-color: #f8f9fa;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .section {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+      }
+
+      .section-header:hover {
+        background-color: #f8f9fa;
+      }
+
+      .section-title {
+        font-weight: 600;
+        color: #333;
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .section-current {
+        color: #666;
+        font-size: 11px;
+        font-style: italic;
+      }
+
+      .section-toggle {
+        color: #666;
+        font-size: 16px;
+        transition: transform 0.2s;
+      }
+
+      .section-toggle.collapsed {
+        transform: rotate(-90deg);
+      }
+
+      .section-content {
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+
+      .section-content.collapsed {
+        max-height: 0;
+        margin-bottom: 0;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .radio-option:hover {
+        background-color: #f5f5f5;
+      }
+
+      .radio-option input[type="radio"] {
+        margin-top: 2px;
+      }
+
+      .radio-label {
+        flex: 1;
+      }
+
+      .radio-title {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 2px;
+      }
+
+      .radio-example {
+        color: #666;
+        font-size: 11px;
+        font-style: italic;
+      }
+
+      .checkbox-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .checkbox-section input[type="checkbox"] {
+        margin: 0;
+      }
+
+      .checkbox-section label {
+        font-size: 12px;
+        color: #555;
+        cursor: pointer;
+      }
+
+      .advanced-settings {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        padding: 12px;
+        margin-top: 8px;
+        margin-bottom: 1em;
+      }
+
+      .url-input-group {
+        margin-bottom: 12px;
+      }
+
+      .url-input-group:last-of-type {
+        margin-bottom: 8px;
+      }
+
+      .url-input-group label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #333;
+        font-size: 11px;
+      }
+
+      .url-input {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 11px;
+        box-sizing: border-box;
+      }
+
+      .url-input:focus {
+        outline: none;
+        border-color: #007acc;
+        box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.2);
+      }
+
+      .reset-btn {
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 6px 12px;
+        font-size: 11px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .reset-btn:hover {
+        background: #e0e0e0;
+      }
+
+      .generate-btn {
+        width: 100%;
+        background: #007acc;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 12px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .generate-btn:hover {
+        background: #005a9e;
+      }
+
+      .generate-btn:active {
+        background: #004578;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('mode-section')">
+        <div>
+          <div class="section-title">Name Length</div>
+          <div class="section-current" id="mode-current">Mixed</div>
         </div>
-        <div class="radio-option">
-          <input type="radio" id="mode-short" name="mode" value="short" onchange="updateModeDisplay()">
-          <label for="mode-short" class="radio-label">
-            <div class="radio-title">Short</div>
-            <div class="radio-example">"quick red fox" or "bold blue cat"</div>
-          </label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="mode-long" name="mode" value="long" onchange="updateModeDisplay()">
-          <label for="mode-long" class="radio-label">
-            <div class="radio-title">Long</div>
-            <div class="radio-example">"magnificent turquoise elephant" or "extraordinary chartreuse rhinoceros"</div>
-          </label>
+        <div class="section-toggle" id="mode-toggle">
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M10.475 6.768a.5.5 0 0 1 0 .707L8.354 9.596 8 9.95l-.354-.354-2.12-2.121a.5.5 0 0 1 .706-.707L8 8.536l1.768-1.768a.5.5 0 0 1 .707 0"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header" onclick="toggleSection('format-section')">
-      <div>
-        <div class="section-title">Format</div>
-        <div class="section-current" id="format-current">Capitalized</div>
+      <div class="section-content" id="mode-section">
+        <div class="radio-group">
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="mode-mixed"
+              name="mode"
+              value="mixed"
+              checked
+              onchange="updateModeDisplay()"
+            />
+            <label for="mode-mixed" class="radio-label">
+              <div class="radio-title">Mixed</div>
+              <div class="radio-example">
+                "swift amber tiger" or "magnificent crimson elephant"
+              </div>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="mode-short"
+              name="mode"
+              value="short"
+              onchange="updateModeDisplay()"
+            />
+            <label for="mode-short" class="radio-label">
+              <div class="radio-title">Short</div>
+              <div class="radio-example">
+                "quick red fox" or "bold blue cat"
+              </div>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="mode-long"
+              name="mode"
+              value="long"
+              onchange="updateModeDisplay()"
+            />
+            <label for="mode-long" class="radio-label">
+              <div class="radio-title">Long</div>
+              <div class="radio-example">
+                "magnificent turquoise elephant" or "extraordinary chartreuse
+                rhinoceros"
+              </div>
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="section-toggle" id="format-toggle">▼</div>
     </div>
-    <div class="section-content" id="format-section">
-      <div class="radio-group">
-        <div class="radio-option">
-          <input type="radio" id="format-capitalized" name="format" value="capitalized" checked onchange="updateFormatDisplay()">
-          <label for="format-capitalized" class="radio-label">
-            <div class="radio-title">Capitalized</div>
-            <div class="radio-example">"Swift Amber Tiger"</div>
-          </label>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection('format-section')">
+        <div>
+          <div class="section-title">Format</div>
+          <div class="section-current" id="format-current">Capitalized</div>
         </div>
-        <div class="radio-option">
-          <input type="radio" id="format-kebab" name="format" value="kebab" onchange="updateFormatDisplay()">
-          <label for="format-kebab" class="radio-label">
-            <div class="radio-title">kebab-case</div>
-            <div class="radio-example">"swift-amber-tiger"</div>
-          </label>
+        <div class="section-toggle" id="format-toggle">
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 16 16"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M10.475 6.768a.5.5 0 0 1 0 .707L8.354 9.596 8 9.95l-.354-.354-2.12-2.121a.5.5 0 0 1 .706-.707L8 8.536l1.768-1.768a.5.5 0 0 1 .707 0"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
         </div>
-        <div class="radio-option">
-          <input type="radio" id="format-lowercase" name="format" value="lowercase" onchange="updateFormatDisplay()">
-          <label for="format-lowercase" class="radio-label">
-            <div class="radio-title">lowercase</div>
-            <div class="radio-example">"swift amber tiger"</div>
-          </label>
+      </div>
+      <div class="section-content" id="format-section">
+        <div class="radio-group">
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="format-capitalized"
+              name="format"
+              value="capitalized"
+              checked
+              onchange="updateFormatDisplay()"
+            />
+            <label for="format-capitalized" class="radio-label">
+              <div class="radio-title">Capitalized</div>
+              <div class="radio-example">Swift Amber Tiger</div>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="format-kebab"
+              name="format"
+              value="kebab"
+              onchange="updateFormatDisplay()"
+            />
+            <label for="format-kebab" class="radio-label">
+              <div class="radio-title">kebab-case</div>
+              <div class="radio-example">swift-amber-tiger</div>
+            </label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              id="format-lowercase"
+              name="format"
+              value="lowercase"
+              onchange="updateFormatDisplay()"
+            />
+            <label for="format-lowercase" class="radio-label">
+              <div class="radio-title">lowercase</div>
+              <div class="radio-example">swift amber tiger</div>
+            </label>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="checkbox-section">
-    <input type="checkbox" id="show-advanced" />
-    <label for="show-advanced">Show Advanced Settings</label>
-  </div>
-
-  <div id="advanced-settings" class="advanced-settings" style="display:none;">
-    <div class="url-input-group">
-      <label for="adjectives-url">Adjectives URL:</label>
-      <input id="adjectives-url" type="text" class="url-input" />
+    <div class="checkbox-section">
+      <input type="checkbox" id="show-advanced" />
+      <label for="show-advanced">Show Advanced Settings</label>
     </div>
-    
-    <div class="url-input-group">
-      <label for="colors-url">Colors URL:</label>
-      <input id="colors-url" type="text" class="url-input" />
+
+    <div id="advanced-settings" class="advanced-settings" style="display: none">
+      <div class="url-input-group">
+        <label for="adjectives-url">Adjectives URL:</label>
+        <input id="adjectives-url" type="text" class="url-input" />
+      </div>
+
+      <div class="url-input-group">
+        <label for="colors-url">Colors URL:</label>
+        <input id="colors-url" type="text" class="url-input" />
+      </div>
+
+      <div class="url-input-group">
+        <label for="animals-url">Animals URL:</label>
+        <input id="animals-url" type="text" class="url-input" />
+      </div>
+
+      <button class="reset-btn" onclick="resetToDefaults()">
+        Reset to Defaults
+      </button>
     </div>
-    
-    <div class="url-input-group">
-      <label for="animals-url">Animals URL:</label>
-      <input id="animals-url" type="text" class="url-input" />
-    </div>
-    
-    <button class="reset-btn" onclick="resetToDefaults()">Reset to Defaults</button>
-  </div>
 
-  <button id="generate" class="generate-btn">Generate & Apply</button>
+    <button id="generate" class="generate-btn">Generate & Apply</button>
 
-  <script>
-    const defaultBaseUrl = "https://raw.githubusercontent.com/helium/angry-purple-tiger/refs/heads/master/src/";
-    const defaultUrls = {
-      adjectives: defaultBaseUrl + "adjectives.js",
-      colors: defaultBaseUrl + "colors.js",
-      animals: defaultBaseUrl + "animals.js"
-    };
-
-    const toggleSection = (sectionId) => {
-      const content = document.getElementById(sectionId);
-      const toggle = document.getElementById(sectionId.replace('-section', '-toggle'));
-      
-      if (content.classList.contains('collapsed')) {
-        content.classList.remove('collapsed');
-        toggle.classList.remove('collapsed');
-        content.style.maxHeight = content.scrollHeight + "px";
-      } else {
-        content.classList.add('collapsed');
-        toggle.classList.add('collapsed');
-        content.style.maxHeight = "0";
-      }
-    };
-
-    const updateModeDisplay = () => {
-      const selectedMode = document.querySelector('input[name="mode"]:checked');
-      const modeText = selectedMode.nextElementSibling.querySelector('.radio-title').textContent;
-      document.getElementById('mode-current').textContent = modeText;
-    };
-
-    const updateFormatDisplay = () => {
-      const selectedFormat = document.querySelector('input[name="format"]:checked');
-      const formatText = selectedFormat.nextElementSibling.querySelector('.radio-title').textContent;
-      document.getElementById('format-current').textContent = formatText;
-    };
-
-    const resetToDefaults = () => {
-      document.getElementById("adjectives-url").value = defaultUrls.adjectives;
-      document.getElementById("colors-url").value = defaultUrls.colors;
-      document.getElementById("animals-url").value = defaultUrls.animals;
-    };
-
-    const fetchWordsFrom = async (url) => {
-      const res = await fetch(url);
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-      }
-      
-      const js = await res.text();
-      let match = js.match(/export default (\[.*\]);/s);
-      if (!match) {
-        match = js.match(/export const \w+ = (\[.*\]);/s);
-      }
-      if (!match) return [];
-      
-      let arrayString = match[1];
-      arrayString = arrayString.replace(/'/g, '"');
-      arrayString = arrayString.replace(/,(\s*[}\]])/g, '$1');
-      
-      return JSON.parse(arrayString);
-    };
-
-    const getWordLists = async (urls) => {
-      const [adjectives, colors, animals] = await Promise.all([
-        fetchWordsFrom(urls.adjectives),
-        fetchWordsFrom(urls.colors),
-        fetchWordsFrom(urls.animals)
-      ]);
-      
-      return { adjectives, colors, animals };
-    };
-
-    window.onload = () => {
-      const checkbox = document.getElementById("show-advanced");
-      const advancedSettings = document.getElementById("advanced-settings");
-
-      checkbox.addEventListener("change", (e) => {
-        advancedSettings.style.display = e.target.checked ? "block" : "none";
-      });
-
-      resetToDefaults();
-      parent.postMessage({ pluginMessage: { type: "load-settings" } }, "*");
-      
-      const sections = ['mode-section', 'format-section'];
-      sections.forEach(sectionId => {
-        const content = document.getElementById(sectionId);
-        content.style.maxHeight = content.scrollHeight + "px";
-        setTimeout(() => toggleSection(sectionId), 100);
-      });
-      
-      updateModeDisplay();
-      updateFormatDisplay();
-    };
-
-    window.onmessage = (event) => {
-      const { pluginMessage } = event.data;
-      if (pluginMessage?.type === "settings") {
-        document.getElementById("adjectives-url").value = pluginMessage.adjectivesUrl || defaultUrls.adjectives;
-        document.getElementById("colors-url").value = pluginMessage.colorsUrl || defaultUrls.colors;
-        document.getElementById("animals-url").value = pluginMessage.animalsUrl || defaultUrls.animals;
-        
-        if (pluginMessage.mode) {
-          document.querySelector(`input[name="mode"][value="${pluginMessage.mode}"]`).checked = true;
-          updateModeDisplay();
-        }
-        if (pluginMessage.format) {
-          document.querySelector(`input[name="format"][value="${pluginMessage.format}"]`).checked = true;
-          updateFormatDisplay();
-        }
-      }
-    };
-
-    document.getElementById("generate").onclick = async () => {
-      const mode = document.querySelector('input[name="mode"]:checked').value;
-      const format = document.querySelector('input[name="format"]:checked').value;
-      const urls = {
-        adjectives: document.getElementById("adjectives-url").value || defaultUrls.adjectives,
-        colors: document.getElementById("colors-url").value || defaultUrls.colors,
-        animals: document.getElementById("animals-url").value || defaultUrls.animals
+    <script>
+      const defaultBaseUrl =
+        "https://raw.githubusercontent.com/helium/angry-purple-tiger/refs/heads/master/src/";
+      const defaultUrls = {
+        adjectives: defaultBaseUrl + "adjectives.js",
+        colors: defaultBaseUrl + "colors.js",
+        animals: defaultBaseUrl + "animals.js",
       };
 
-      try {
-        const wordLists = await getWordLists(urls);
-        parent.postMessage({
-          pluginMessage: {
-            type: 'generate-name',
-            mode,
-            format,
-            urls,
-            wordLists
+      const toggleSection = (sectionId) => {
+        const content = document.getElementById(sectionId);
+        const toggle = document.getElementById(
+          sectionId.replace("-section", "-toggle")
+        );
+
+        if (content.classList.contains("collapsed")) {
+          content.classList.remove("collapsed");
+          toggle.classList.remove("collapsed");
+          content.style.maxHeight = content.scrollHeight + "px";
+        } else {
+          content.classList.add("collapsed");
+          toggle.classList.add("collapsed");
+          content.style.maxHeight = "0";
+        }
+      };
+
+      const updateModeDisplay = () => {
+        const selectedMode = document.querySelector(
+          'input[name="mode"]:checked'
+        );
+        const modeText =
+          selectedMode.nextElementSibling.querySelector(
+            ".radio-title"
+          ).textContent;
+        document.getElementById("mode-current").textContent = modeText;
+      };
+
+      const updateFormatDisplay = () => {
+        const selectedFormat = document.querySelector(
+          'input[name="format"]:checked'
+        );
+        const formatText =
+          selectedFormat.nextElementSibling.querySelector(
+            ".radio-title"
+          ).textContent;
+        document.getElementById("format-current").textContent = formatText;
+      };
+
+      const resetToDefaults = () => {
+        document.getElementById("adjectives-url").value =
+          defaultUrls.adjectives;
+        document.getElementById("colors-url").value = defaultUrls.colors;
+        document.getElementById("animals-url").value = defaultUrls.animals;
+      };
+
+      const fetchWordsFrom = async (url) => {
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const js = await res.text();
+        let match = js.match(/export default (\[.*\]);/s);
+        if (!match) {
+          match = js.match(/export const \w+ = (\[.*\]);/s);
+        }
+        if (!match) return [];
+
+        let arrayString = match[1];
+        arrayString = arrayString.replace(/'/g, '"');
+        arrayString = arrayString.replace(/,(\s*[}\]])/g, "$1");
+
+        return JSON.parse(arrayString);
+      };
+
+      const getWordLists = async (urls) => {
+        const [adjectives, colors, animals] = await Promise.all([
+          fetchWordsFrom(urls.adjectives),
+          fetchWordsFrom(urls.colors),
+          fetchWordsFrom(urls.animals),
+        ]);
+
+        return { adjectives, colors, animals };
+      };
+
+      window.onload = () => {
+        const checkbox = document.getElementById("show-advanced");
+        const advancedSettings = document.getElementById("advanced-settings");
+
+        checkbox.addEventListener("change", (e) => {
+          advancedSettings.style.display = e.target.checked ? "block" : "none";
+        });
+
+        resetToDefaults();
+        parent.postMessage({ pluginMessage: { type: "load-settings" } }, "*");
+
+        const sections = ["mode-section", "format-section"];
+        sections.forEach((sectionId) => {
+          const content = document.getElementById(sectionId);
+          content.style.maxHeight = content.scrollHeight + "px";
+          setTimeout(() => toggleSection(sectionId), 100);
+        });
+
+        updateModeDisplay();
+        updateFormatDisplay();
+      };
+
+      window.onmessage = (event) => {
+        const { pluginMessage } = event.data;
+        if (pluginMessage?.type === "settings") {
+          document.getElementById("adjectives-url").value =
+            pluginMessage.adjectivesUrl || defaultUrls.adjectives;
+          document.getElementById("colors-url").value =
+            pluginMessage.colorsUrl || defaultUrls.colors;
+          document.getElementById("animals-url").value =
+            pluginMessage.animalsUrl || defaultUrls.animals;
+
+          if (pluginMessage.mode) {
+            document.querySelector(
+              `input[name="mode"][value="${pluginMessage.mode}"]`
+            ).checked = true;
+            updateModeDisplay();
           }
-        }, '*');
-      } catch (e) {
-        alert(`Failed to fetch word lists: ${e.message}`);
-      }
-    };
-  </script>
-</body>
+          if (pluginMessage.format) {
+            document.querySelector(
+              `input[name="format"][value="${pluginMessage.format}"]`
+            ).checked = true;
+            updateFormatDisplay();
+          }
+        }
+      };
+
+      document.getElementById("generate").onclick = async () => {
+        const mode = document.querySelector('input[name="mode"]:checked').value;
+        const format = document.querySelector(
+          'input[name="format"]:checked'
+        ).value;
+        const urls = {
+          adjectives:
+            document.getElementById("adjectives-url").value ||
+            defaultUrls.adjectives,
+          colors:
+            document.getElementById("colors-url").value || defaultUrls.colors,
+          animals:
+            document.getElementById("animals-url").value || defaultUrls.animals,
+        };
+
+        try {
+          const wordLists = await getWordLists(urls);
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "generate-name",
+                mode,
+                format,
+                urls,
+                wordLists,
+              },
+            },
+            "*"
+          );
+        } catch (e) {
+          alert(`Failed to fetch word lists: ${e.message}`);
+        }
+      };
+    </script>
+  </body>
 </html>
